@@ -38,10 +38,16 @@ Current blockers: None.
 	- https://github.com/hts-group/TransitIQ-connectors/issues/12#issuecomment-4272382185
 - Evidence correction comment:
 	- https://github.com/hts-group/TransitIQ-connectors/issues/12#issuecomment-4272382708
+- Main-merge follow-up comment:
+	- https://github.com/hts-group/TransitIQ-connectors/issues/12#issuecomment-4272385708
+- Merge-commit correction comment:
+	- https://github.com/hts-group/TransitIQ-connectors/issues/12#issuecomment-4272386214
 - Commit:
 	- https://github.com/hts-group/TransitIQ-connectors/commit/682758c322f3194115405244917cdf1d9af2d18b
 - PR:
 	- https://github.com/hts-group/TransitIQ-connectors/pull/13
+- PR #13 merge commit on main:
+	- https://github.com/hts-group/TransitIQ-connectors/commit/9f48411c4fc1c0aaf34c9bed955ef0fa8e894272
 - Validation:
 	- `python -m transitiq_connectors.readiness_gates`
 	- `python -m unittest tests.test_readiness_gates -v`
