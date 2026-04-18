@@ -1,0 +1,32 @@
+{
+  "generated_at_utc": "2026-04-18T22:20:27Z",
+  "prioritized_blockers": [],
+  "profiles": [
+    {
+      "conformance_score_pct": 100.0,
+      "fail_triggered": false,
+      "posture": "ready",
+      "profile": "ntcip"
+    },
+    {
+      "conformance_score_pct": 100.0,
+      "fail_triggered": false,
+      "posture": "ready",
+      "profile": "solari"
+    },
+    {
+      "conformance_score_pct": 100.0,
+      "fail_triggered": false,
+      "posture": "ready",
+      "profile": "yaham"
+    }
+  ],
+  "release_candidate_disposition": "ready",
+  "source_readiness_generated_at_utc": "2026-04-18T02:02:13Z",
+  "summary": {
+    "block_profiles": 0,
+    "ready_profiles": 3,
+    "total_profiles": 3,
+    "watch_profiles": 0
+  }
+}

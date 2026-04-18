@@ -5,6 +5,9 @@
 Define operator actions for per-profile readiness gate outcomes emitted from
 scorecard artifacts.
 
+This playbook now includes release-candidate aggregation outputs that combine
+all profile postures into a single go/watch/hold disposition.
+
 ## Posture Actions
 
 1. ready
@@ -38,3 +41,32 @@ scorecard artifacts.
 
 - This playbook governs connector-local release posture and does not redefine
   canonical control-plane semantics.
+
+## Release-Candidate Aggregation
+
+Input artifact:
+
+- `docs/connector-readiness-gates.latest.json`
+
+Output artifact:
+
+- `docs/connector-release-candidate-gates.latest.json`
+
+Disposition rollup rule:
+
+1. `block` if any profile is `block`.
+2. `watch` if no profile is `block` and at least one profile is `watch`.
+3. `ready` only when all profiles are `ready`.
+
+Prioritized blocker list rule:
+
+- Blockers are emitted from non-ready profile recommendations and sorted by:
+  `priority`, then posture severity (`block` before `watch`), then profile,
+  category, and action for deterministic tie-breaking.
+
+Operator response:
+
+1. `ready`: proceed with release candidate checkpoint.
+2. `watch`: proceed only with explicit tracking of prioritized blocker burn-down.
+3. `block`: hold release candidate checkpoint until priority-1 blockers are
+   remediated and gate output is re-generated.
