@@ -1,0 +1,114 @@
+{
+  "profiles": {
+    "ntcip": {
+      "required_capabilities": [
+        "connect",
+        "discovery",
+        "observed_status",
+        "message_post",
+        "brightness_control",
+        "control_mode"
+      ],
+      "current_capabilities": [
+        "connect",
+        "discovery",
+        "observed_status",
+        "message_post",
+        "brightness_control",
+        "control_mode"
+      ],
+      "baseline_class_mappings": {
+        "connect": "health",
+        "discovery": "debug",
+        "observed_status": "health",
+        "message_post": "operator_action",
+        "brightness_control": "telemetry",
+        "control_mode": "operator_action"
+      },
+      "current_class_mappings": {
+        "connect": "health",
+        "discovery": "debug",
+        "observed_status": "health",
+        "message_post": "operator_action",
+        "brightness_control": "telemetry",
+        "control_mode": "operator_action"
+      },
+      "validation": {
+        "passed": 15,
+        "total": 15
+      }
+    },
+    "yaham": {
+      "required_capabilities": [
+        "connect",
+        "discovery",
+        "observed_status",
+        "brightness_control",
+        "playlist_control"
+      ],
+      "current_capabilities": [
+        "connect",
+        "discovery",
+        "observed_status",
+        "brightness_control",
+        "playlist_control"
+      ],
+      "baseline_class_mappings": {
+        "connect": "health",
+        "discovery": "debug",
+        "observed_status": "health",
+        "brightness_control": "telemetry",
+        "playlist_control": "operator_action"
+      },
+      "current_class_mappings": {
+        "connect": "health",
+        "discovery": "debug",
+        "observed_status": "health",
+        "brightness_control": "telemetry",
+        "playlist_control": "operator_action"
+      },
+      "validation": {
+        "passed": 15,
+        "total": 15
+      }
+    },
+    "solari": {
+      "required_capabilities": [
+        "connect",
+        "discovery",
+        "observed_status",
+        "control_mode",
+        "predefined_message_activation",
+        "template_activation"
+      ],
+      "current_capabilities": [
+        "connect",
+        "discovery",
+        "observed_status",
+        "control_mode",
+        "predefined_message_activation",
+        "template_activation"
+      ],
+      "baseline_class_mappings": {
+        "connect": "health",
+        "discovery": "debug",
+        "observed_status": "health",
+        "control_mode": "operator_action",
+        "predefined_message_activation": "operator_action",
+        "template_activation": "operator_action"
+      },
+      "current_class_mappings": {
+        "connect": "health",
+        "discovery": "debug",
+        "observed_status": "health",
+        "control_mode": "operator_action",
+        "predefined_message_activation": "operator_action",
+        "template_activation": "operator_action"
+      },
+      "validation": {
+        "passed": 15,
+        "total": 15
+      }
+    }
+  }
+}

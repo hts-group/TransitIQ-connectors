@@ -1,0 +1,72 @@
+{
+  "generated_at_utc": "2026-04-18T01:52:37Z",
+  "overall_fail_triggered": false,
+  "profiles": [
+    {
+      "budget": {
+        "max_changed_mappings": 0,
+        "max_removed_mappings": 0
+      },
+      "drift": {
+        "added_capabilities": [],
+        "added_mappings": 0,
+        "changed_mappings": 0,
+        "removed_capabilities": [],
+        "removed_mappings": 0
+      },
+      "fail_reasons": [],
+      "fail_triggered": false,
+      "metrics": {
+        "capability_coverage_pct": 100.0,
+        "conformance_score_pct": 100.0,
+        "mapping_consistency_pct": 100.0,
+        "validation_pass_rate_pct": 100.0
+      },
+      "profile": "ntcip"
+    },
+    {
+      "budget": {
+        "max_changed_mappings": 0,
+        "max_removed_mappings": 0
+      },
+      "drift": {
+        "added_capabilities": [],
+        "added_mappings": 0,
+        "changed_mappings": 0,
+        "removed_capabilities": [],
+        "removed_mappings": 0
+      },
+      "fail_reasons": [],
+      "fail_triggered": false,
+      "metrics": {
+        "capability_coverage_pct": 100.0,
+        "conformance_score_pct": 100.0,
+        "mapping_consistency_pct": 100.0,
+        "validation_pass_rate_pct": 100.0
+      },
+      "profile": "solari"
+    },
+    {
+      "budget": {
+        "max_changed_mappings": 0,
+        "max_removed_mappings": 0
+      },
+      "drift": {
+        "added_capabilities": [],
+        "added_mappings": 0,
+        "changed_mappings": 0,
+        "removed_capabilities": [],
+        "removed_mappings": 0
+      },
+      "fail_reasons": [],
+      "fail_triggered": false,
+      "metrics": {
+        "capability_coverage_pct": 100.0,
+        "conformance_score_pct": 100.0,
+        "mapping_consistency_pct": 100.0,
+        "validation_pass_rate_pct": 100.0
+      },
+      "profile": "yaham"
+    }
+  ]
+}
