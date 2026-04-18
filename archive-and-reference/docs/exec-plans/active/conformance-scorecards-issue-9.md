@@ -1,6 +1,6 @@
 # Execution Plan - Issue #9 Conformance Scorecards And Regression Budgets
 
-Status: Active (claimed slice in progress)
+Status: Active (claimed slice delivered; awaiting PM verification)
 Owner: Connectors / Integrations agent
 Last updated: 2026-04-18
 
@@ -30,5 +30,20 @@ Current blockers: None.
 
 ## Next Step
 
-1. Run scorecard generator and tests.
-2. Post issue #9 milestone with commit-linked evidence and validation output.
+1. Monitor issue #9 for PM verification or follow-on directives.
+2. If budget thresholds or score math require updates, keep changes additive and
+   post refreshed commit-linked evidence.
+
+## Closure Evidence
+
+- Issue #9 milestone update:
+  - https://github.com/hts-group/TransitIQ-connectors/issues/9#issuecomment-4272358045
+- Owner-check completion addendum:
+  - https://github.com/hts-group/TransitIQ-connectors/issues/9#issuecomment-4272360311
+- Merged PR:
+  - https://github.com/hts-group/TransitIQ-connectors/pull/10
+- Merge commit on main:
+  - https://github.com/hts-group/TransitIQ-connectors/commit/c43446dcddc041537fe2166e0fb890ab05016abf
+- Validation:
+  - `python -m transitiq_connectors.conformance_scorecards`
+  - `python -m unittest tests.test_conformance_scorecards -v`
