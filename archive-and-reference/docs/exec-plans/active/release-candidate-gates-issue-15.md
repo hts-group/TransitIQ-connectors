@@ -29,12 +29,19 @@ Current blockers: None.
 
 ## Next Step
 
-1. Post milestone evidence in issue #15 and mirror the milestone in issue #2.
-2. Recheck issue #15 and issue #2 immediately for any new directives.
+1. Monitor issue #15 for PM verification or merge follow-up directives.
+2. Keep issue #2 mirror state synchronized at each milestone/recheck.
 
 ## Closure Evidence
 
-- Pending: milestone comment link
-- Pending: commit link
-- Pending: PR link
-- Pending: validation commands
+- Issue #15 milestone comment:
+  - https://github.com/hts-group/TransitIQ-connectors/issues/15#issuecomment-4274672479
+- Issue #2 mirror comment:
+  - https://github.com/hts-group/TransitIQ-connectors/issues/2#issuecomment-4274672516
+- Commit:
+  - https://github.com/hts-group/TransitIQ-connectors/commit/08034cdceae49272d89546b7b5c4d772781ab072
+- PR:
+  - https://github.com/hts-group/TransitIQ-connectors/pull/16
+- Validation:
+  - `python -m transitiq_connectors.release_candidate_gates`
+  - `python -m unittest tests.test_release_candidate_gates -v`
