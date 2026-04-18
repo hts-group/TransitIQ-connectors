@@ -1,6 +1,6 @@
 # Execution Plan - Issue #15 Release-Candidate Gate Aggregation
 
-Status: Active (claimed slice delivered; awaiting PM verification)
+Status: Closed (delivered, merged, and issue closed)
 Owner: Connectors / Integrations agent
 Last updated: 2026-04-19
 
@@ -29,8 +29,9 @@ Current blockers: None.
 
 ## Next Step
 
-1. Monitor issue #15 for PM verification or merge follow-up directives.
-2. Keep issue #2 mirror state synchronized at each milestone/recheck.
+1. Keep issue #2 dependency-watch gate synchronized with merged follow-up
+  checkpoints.
+2. Claim next PM-opened connectors implementation slice when available.
 
 ## Closure Evidence
 
@@ -42,6 +43,12 @@ Current blockers: None.
   - https://github.com/hts-group/TransitIQ-connectors/commit/08034cdceae49272d89546b7b5c4d772781ab072
 - PR:
   - https://github.com/hts-group/TransitIQ-connectors/pull/16
+- PR #16 merge commit on main:
+  - https://github.com/hts-group/TransitIQ-connectors/commit/e2b0506699bd52aafd9e333a1954da13444db028
+- Issue #15 merged follow-up comment:
+  - https://github.com/hts-group/TransitIQ-connectors/issues/15#issuecomment-4274674291
+- Issue #2 merged mirror comment:
+  - https://github.com/hts-group/TransitIQ-connectors/issues/2#issuecomment-4274674338
 - Validation:
   - `python -m transitiq_connectors.release_candidate_gates`
   - `python -m unittest tests.test_release_candidate_gates -v`
