@@ -1,0 +1,18 @@
+test_ntcip_adapter_contract (tests.test_adapter_contracts.AdapterContractTests.test_ntcip_adapter_contract) ... Executing <Task finished name='Task-2' coro=<AdapterContractTests.test_ntcip_adapter_contract() done, defined at C:\Users\marsh\Documents\HTS\TransitIQ\connectors\TransitIQ-connectors-git\archive-and-reference\tests\test_adapter_contracts.py:83> result=None created at C:\Python314\Lib\asyncio\runners.py:109> took 0.132 seconds
+ok
+test_solari_adapter_contract (tests.test_adapter_contracts.AdapterContractTests.test_solari_adapter_contract) ... ok
+test_yaham_adapter_contract (tests.test_adapter_contracts.AdapterContractTests.test_yaham_adapter_contract) ... ok
+test_anchor_consumption_and_retirement_plan_are_explicit (tests.test_mapping_placeholders.MappingPlaceholderGuardTests.test_anchor_consumption_and_retirement_plan_are_explicit) ... ok
+test_bridge_mappings_remain_temporary_until_frozen_semantics (tests.test_mapping_placeholders.MappingPlaceholderGuardTests.test_bridge_mappings_remain_temporary_until_frozen_semantics) ... ok
+test_escalation_blocks_local_contract_drift (tests.test_mapping_placeholders.MappingPlaceholderGuardTests.test_escalation_blocks_local_contract_drift) ... ok
+test_explicitly_non_canonical (tests.test_mapping_placeholders.MappingPlaceholderGuardTests.test_explicitly_non_canonical) ... ok
+test_placeholders_are_explicitly_pending_signoff (tests.test_mapping_placeholders.MappingPlaceholderGuardTests.test_placeholders_are_explicitly_pending_signoff) ... ok
+test_readiness_gate_defers_final_signoff (tests.test_mapping_placeholders.MappingPlaceholderGuardTests.test_readiness_gate_defers_final_signoff) ... ok
+test_adapters_map_to_supported_taxonomy_rows (tests.test_signal_taxonomy_mapping.SignalTaxonomyMappingTests.test_adapters_map_to_supported_taxonomy_rows) ... ok
+test_guard_rejects_unsupported_placeholder_paths (tests.test_signal_taxonomy_mapping.SignalTaxonomyMappingTests.test_guard_rejects_unsupported_placeholder_paths) ... ok
+test_matrix_contains_expected_patterns (tests.test_signal_taxonomy_mapping.SignalTaxonomyMappingTests.test_matrix_contains_expected_patterns) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.245s
+
+OK

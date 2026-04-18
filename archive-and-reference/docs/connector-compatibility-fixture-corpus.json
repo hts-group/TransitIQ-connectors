@@ -1,0 +1,122 @@
+[
+  {
+    "case_id": "ntcip-valid-connect-health",
+    "adapter_profile": "ntcip",
+    "capability": "connect",
+    "signal_class": "health",
+    "expected_valid": true,
+    "notes": "Base connectivity and health reporting path."
+  },
+  {
+    "case_id": "ntcip-valid-message-operator",
+    "adapter_profile": "ntcip",
+    "capability": "message_post",
+    "signal_class": "operator_action",
+    "expected_valid": true,
+    "notes": "Ntcip message control should map into operator action class."
+  },
+  {
+    "case_id": "ntcip-valid-brightness-telemetry",
+    "adapter_profile": "ntcip",
+    "capability": "brightness_control",
+    "signal_class": "telemetry",
+    "expected_valid": true,
+    "notes": "Brightness control telemetry is allowed for ntcip."
+  },
+  {
+    "case_id": "ntcip-invalid-playlist-operator",
+    "adapter_profile": "ntcip",
+    "capability": "playlist_control",
+    "signal_class": "operator_action",
+    "expected_valid": false,
+    "notes": "Playlist control is not part of ntcip capability profile."
+  },
+  {
+    "case_id": "ntcip-invalid-controlmode-audit",
+    "adapter_profile": "ntcip",
+    "capability": "control_mode",
+    "signal_class": "audit",
+    "expected_valid": false,
+    "notes": "Audit class is intentionally excluded from adapter compatibility set."
+  },
+  {
+    "case_id": "yaham-valid-connect-health",
+    "adapter_profile": "yaham",
+    "capability": "connect",
+    "signal_class": "health",
+    "expected_valid": true,
+    "notes": "Base connectivity and health reporting path."
+  },
+  {
+    "case_id": "yaham-valid-playlist-operator",
+    "adapter_profile": "yaham",
+    "capability": "playlist_control",
+    "signal_class": "operator_action",
+    "expected_valid": true,
+    "notes": "Playlist control is yaham-specific and maps to operator action."
+  },
+  {
+    "case_id": "yaham-valid-brightness-telemetry",
+    "adapter_profile": "yaham",
+    "capability": "brightness_control",
+    "signal_class": "telemetry",
+    "expected_valid": true,
+    "notes": "Brightness data from yaham can be handled as telemetry."
+  },
+  {
+    "case_id": "yaham-invalid-template-operator",
+    "adapter_profile": "yaham",
+    "capability": "template_activation",
+    "signal_class": "operator_action",
+    "expected_valid": false,
+    "notes": "Template activation is not supported by yaham capability profile."
+  },
+  {
+    "case_id": "yaham-invalid-observed-ai",
+    "adapter_profile": "yaham",
+    "capability": "observed_status",
+    "signal_class": "ai_assessment",
+    "expected_valid": false,
+    "notes": "Ai assessment class is out of scope for connector fixture compatibility."
+  },
+  {
+    "case_id": "solari-valid-connect-health",
+    "adapter_profile": "solari",
+    "capability": "connect",
+    "signal_class": "health",
+    "expected_valid": true,
+    "notes": "Base connectivity and health reporting path."
+  },
+  {
+    "case_id": "solari-valid-template-operator",
+    "adapter_profile": "solari",
+    "capability": "template_activation",
+    "signal_class": "operator_action",
+    "expected_valid": true,
+    "notes": "Template activation maps to operator action for solari profile."
+  },
+  {
+    "case_id": "solari-valid-predefined-operator",
+    "adapter_profile": "solari",
+    "capability": "predefined_message_activation",
+    "signal_class": "operator_action",
+    "expected_valid": true,
+    "notes": "Predefined message activation remains valid for solari connectors."
+  },
+  {
+    "case_id": "solari-invalid-brightness-telemetry",
+    "adapter_profile": "solari",
+    "capability": "brightness_control",
+    "signal_class": "telemetry",
+    "expected_valid": false,
+    "notes": "Brightness control is not supported by solari profile."
+  },
+  {
+    "case_id": "solari-invalid-predefined-telemetry",
+    "adapter_profile": "solari",
+    "capability": "predefined_message_activation",
+    "signal_class": "telemetry",
+    "expected_valid": false,
+    "notes": "Solari profile does not expose telemetry-class compatibility in this fixture."
+  }
+]
