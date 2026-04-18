@@ -1,0 +1,81 @@
+{
+  "generated_at_utc": "2026-04-18T02:02:13Z",
+  "overall_posture": "ready",
+  "profiles": [
+    {
+      "drift": {
+        "added_capabilities": [],
+        "added_mappings": 0,
+        "changed_mappings": 0,
+        "removed_capabilities": [],
+        "removed_mappings": 0
+      },
+      "fail_triggered": false,
+      "metrics": {
+        "capability_coverage_pct": 100.0,
+        "conformance_score_pct": 100.0,
+        "mapping_consistency_pct": 100.0,
+        "validation_pass_rate_pct": 100.0
+      },
+      "posture": "ready",
+      "profile": "ntcip",
+      "recommendations": [
+        {
+          "action": "Keep baseline and scorecard artifact synced at each milestone.",
+          "category": "maintain",
+          "priority": 3
+        }
+      ]
+    },
+    {
+      "drift": {
+        "added_capabilities": [],
+        "added_mappings": 0,
+        "changed_mappings": 0,
+        "removed_capabilities": [],
+        "removed_mappings": 0
+      },
+      "fail_triggered": false,
+      "metrics": {
+        "capability_coverage_pct": 100.0,
+        "conformance_score_pct": 100.0,
+        "mapping_consistency_pct": 100.0,
+        "validation_pass_rate_pct": 100.0
+      },
+      "posture": "ready",
+      "profile": "solari",
+      "recommendations": [
+        {
+          "action": "Keep baseline and scorecard artifact synced at each milestone.",
+          "category": "maintain",
+          "priority": 3
+        }
+      ]
+    },
+    {
+      "drift": {
+        "added_capabilities": [],
+        "added_mappings": 0,
+        "changed_mappings": 0,
+        "removed_capabilities": [],
+        "removed_mappings": 0
+      },
+      "fail_triggered": false,
+      "metrics": {
+        "capability_coverage_pct": 100.0,
+        "conformance_score_pct": 100.0,
+        "mapping_consistency_pct": 100.0,
+        "validation_pass_rate_pct": 100.0
+      },
+      "posture": "ready",
+      "profile": "yaham",
+      "recommendations": [
+        {
+          "action": "Keep baseline and scorecard artifact synced at each milestone.",
+          "category": "maintain",
+          "priority": 3
+        }
+      ]
+    }
+  ]
+}
