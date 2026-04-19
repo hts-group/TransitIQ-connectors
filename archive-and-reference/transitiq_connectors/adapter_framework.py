@@ -148,8 +148,13 @@ class AdapterFramework:
             "version": self.CONTRACT_SURFACE_VERSION,
         }
 
+    def contract_fingerprint(self) -> str:
+        coordinates = self.contract_coordinates()
+        return f"{coordinates['id']}@{coordinates['version']}"
+
     def contract_surface(self) -> Dict[str, Any]:
         return {
+            "contract_fingerprint": self.contract_fingerprint(),
             "contract_coordinates": self.contract_coordinates(),
             "contract_surface_id": self.CONTRACT_SURFACE_ID,
             "contract_surface_version": self.CONTRACT_SURFACE_VERSION,
