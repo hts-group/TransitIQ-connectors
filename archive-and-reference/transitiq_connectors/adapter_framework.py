@@ -41,6 +41,14 @@ class AdapterFramework:
     def register(self, adapter_id: str, adapter: AdapterInterface) -> None:
         self._adapters[adapter_id] = adapter
 
+    def register_or_replace(self, adapter_id: str, adapter: AdapterInterface) -> bool:
+        replaced_existing = adapter_id in self._adapters
+        self._adapters[adapter_id] = adapter
+        return replaced_existing
+
+    def has_adapter(self, adapter_id: str) -> bool:
+        return adapter_id in self._adapters
+
     def unregister(self, adapter_id: str) -> bool:
         if adapter_id not in self._adapters:
             return False
