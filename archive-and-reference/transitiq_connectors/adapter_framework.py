@@ -88,6 +88,21 @@ class AdapterFramework:
 
         return snapshot
 
+    def adapter_metadata(self, adapter_id: str) -> Dict[str, Any]:
+        adapter = self._adapters.get(adapter_id)
+        if adapter is None:
+            return {
+                "adapter_id": adapter_id,
+                "registered": False,
+                "supported_routes": [],
+            }
+
+        return {
+            "adapter_id": adapter_id,
+            "registered": True,
+            "supported_routes": self.list_supported_routes(adapter_id),
+        }
+
     def route(self, adapter_id: str, request: AdapterRequest) -> AdapterResponse:
         adapter = self._adapters.get(adapter_id)
         if adapter is None:
