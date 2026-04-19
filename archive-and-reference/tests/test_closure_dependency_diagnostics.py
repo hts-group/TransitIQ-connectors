@@ -124,6 +124,67 @@ class ClosureDependencyDiagnosticsTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "release_candidate_disposition"):
             load_release_candidate_gate(rc_path)
 
+    def test_release_candidate_block_forces_closure_block(self) -> None:
+        dependency_input = {
+            "dependencies": [
+                {
+                    "id": "status-freeze",
+                    "name": "Frozen status mapping envelope",
+                    "owner": "TransitIQ-control-plane",
+                    "status": "closed",
+                    "severity": "high",
+                    "canonical_contract": True,
+                    "due_utc": "2026-04-21T18:00:00Z",
+                    "remediation": "No action.",
+                }
+            ]
+        }
+        release_candidate_block = {
+            "release_candidate_disposition": "block",
+            "prioritized_blockers": [
+                {
+                    "priority": 1,
+                    "profile": "solari",
+                    "category": "restore_removed_mappings",
+                    "action": "Restore removed mappings.",
+                }
+            ],
+        }
+
+        diagnostics = evaluate_closure_diagnostics(
+            dependency_input,
+            release_candidate_block,
+            now_utc=datetime(2026, 4, 19, 0, 0, 0, tzinfo=timezone.utc),
+        )
+
+        self.assertEqual("block", diagnostics["closure_posture"])
+        self.assertEqual(1, diagnostics["summary"]["release_candidate_blockers"])
+
+    def test_invalid_due_timestamp_raises_value_error(self) -> None:
+        malformed_dependency_input = {
+            "dependencies": [
+                {
+                    "id": "status-freeze",
+                    "name": "Frozen status mapping envelope",
+                    "owner": "TransitIQ-control-plane",
+                    "status": "open",
+                    "severity": "high",
+                    "canonical_contract": True,
+                    "due_utc": "2026-04-21",
+                    "remediation": "Publish mapping.",
+                }
+            ]
+        }
+
+        with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False, encoding="utf-8") as dep_handle:
+            json.dump(malformed_dependency_input, dep_handle)
+            dep_path = Path(dep_handle.name)
+
+        self.addCleanup(lambda: dep_path.unlink(missing_ok=True))
+
+        with self.assertRaisesRegex(ValueError, "YYYY-MM-DDTHH:MM:SSZ"):
+            load_dependency_input(dep_path)
+
 
 if __name__ == "__main__":
     unittest.main()
