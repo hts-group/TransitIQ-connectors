@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import unittest
 
-from transitiq_connectors.adapter_framework import AdapterRequest, ReferenceAdapterStub
+from transitiq_connectors.adapter_framework import AdapterFramework, AdapterRequest, ReferenceAdapterStub
 
 
 class AdapterFrameworkSkeletonTests(unittest.TestCase):
@@ -31,6 +31,25 @@ class AdapterFrameworkSkeletonTests(unittest.TestCase):
 
         self.assertFalse(response.ok)
         self.assertEqual("unsupported_route", response.error_code)
+        self.assertTrue(response.error_message)
+
+    def test_framework_routes_to_registered_adapter(self) -> None:
+        framework = AdapterFramework()
+        framework.register("reference", ReferenceAdapterStub())
+
+        response = framework.route("reference", AdapterRequest(route="health", payload={}))
+
+        self.assertTrue(response.ok)
+        self.assertEqual("health", response.route)
+        self.assertEqual("ok", response.result["status"])
+
+    def test_framework_returns_adapter_not_found_error(self) -> None:
+        framework = AdapterFramework()
+
+        response = framework.route("missing", AdapterRequest(route="health", payload={}))
+
+        self.assertFalse(response.ok)
+        self.assertEqual("adapter_not_found", response.error_code)
         self.assertTrue(response.error_message)
 
 
