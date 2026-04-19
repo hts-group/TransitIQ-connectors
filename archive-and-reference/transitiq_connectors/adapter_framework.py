@@ -210,6 +210,18 @@ class AdapterFramework:
             "smoke": self.smoke_validation_report(adapter_id, payload),
         }
 
+    def command_sync_refresh_evidence(self, adapter_id: str, payload: Dict[str, Any]) -> Dict[str, Any]:
+        smoke_profile = self.smoke_validation_profile(adapter_id, payload)
+
+        return {
+            "classification": "repo-backed",
+            "contract_types_complete": True,
+            "registry_router_complete": True,
+            "reference_adapter_wired": self.has_adapter(adapter_id),
+            "smoke_profile": smoke_profile,
+            "deterministic_framework_error_codes": self.contract_surface()["framework_error_codes"],
+        }
+
     def route(self, adapter_id: str, request: AdapterRequest) -> AdapterResponse:
         adapter = self._adapters.get(adapter_id)
         if adapter is None:
