@@ -164,6 +164,37 @@ class ReadinessGateTests(unittest.TestCase):
         self.assertEqual("watch", postures["solari"])
         self.assertEqual("block", postures["yaham"])
 
+    def test_watch_with_no_drift_emits_observe_recommendation(self) -> None:
+        payload = self._scorecard_payload()
+        profile = payload["profiles"][0]
+        profile["metrics"]["conformance_score_pct"] = 90.0
+        profile["drift"]["changed_mappings"] = 0
+        profile["drift"]["removed_mappings"] = 0
+        profile["drift"]["added_mappings"] = 0
+        profile["fail_triggered"] = False
+        profile["fail_reasons"] = []
+
+        readiness = evaluate_readiness_gates(payload)
+        recommendations = readiness["profiles"][0]["recommendations"]
+
+        self.assertEqual("watch", readiness["overall_posture"])
+        self.assertEqual(1, len(recommendations))
+        self.assertEqual("observe", recommendations[0]["category"])
+        self.assertEqual(3, recommendations[0]["priority"])
+
+    def test_fail_reasons_are_emitted_as_recommendations(self) -> None:
+        payload = self._scorecard_payload()
+        profile = payload["profiles"][0]
+        profile["fail_triggered"] = True
+        profile["fail_reasons"] = ["changed_mappings_exceeded:2>0"]
+        profile["drift"]["changed_mappings"] = 2
+
+        readiness = evaluate_readiness_gates(payload)
+        recommendations = readiness["profiles"][0]["recommendations"]
+
+        categories = [item["category"] for item in recommendations]
+        self.assertIn("threshold_fail_reason", categories)
+
 
 if __name__ == "__main__":
     unittest.main()

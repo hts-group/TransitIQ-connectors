@@ -185,6 +185,57 @@ class ClosureDependencyDiagnosticsTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "YYYY-MM-DDTHH:MM:SSZ"):
             load_dependency_input(dep_path)
 
+    def test_all_dependencies_resolved_yields_ready_posture(self) -> None:
+        dependency_input = {
+            "dependencies": [
+                {
+                    "id": "status-freeze",
+                    "name": "Frozen status mapping envelope",
+                    "owner": "TransitIQ-control-plane",
+                    "status": "closed",
+                    "severity": "high",
+                    "canonical_contract": True,
+                    "due_utc": "2026-04-21T18:00:00Z",
+                    "remediation": "None.",
+                },
+                {
+                    "id": "telemetry-freeze",
+                    "name": "Frozen telemetry naming/units",
+                    "owner": "TransitIQ-control-plane",
+                    "status": "consumed",
+                    "severity": "high",
+                    "canonical_contract": True,
+                    "due_utc": "2026-04-21T18:00:00Z",
+                    "remediation": "None.",
+                },
+            ]
+        }
+
+        diagnostics = evaluate_closure_diagnostics(
+            dependency_input,
+            self._release_candidate_ready(),
+            now_utc=datetime(2026, 4, 19, 0, 0, 0, tzinfo=timezone.utc),
+        )
+
+        self.assertEqual("ready", diagnostics["closure_posture"])
+        self.assertEqual(0, diagnostics["summary"]["open_dependencies"])
+        self.assertEqual(2, diagnostics["summary"]["resolved_dependencies"])
+
+    def test_malformed_release_candidate_blocker_type_raises_value_error(self) -> None:
+        malformed_release_candidate = {
+            "release_candidate_disposition": "watch",
+            "prioritized_blockers": "none",
+        }
+
+        with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False, encoding="utf-8") as rc_handle:
+            json.dump(malformed_release_candidate, rc_handle)
+            rc_path = Path(rc_handle.name)
+
+        self.addCleanup(lambda: rc_path.unlink(missing_ok=True))
+
+        with self.assertRaisesRegex(ValueError, "prioritized_blockers"):
+            load_release_candidate_gate(rc_path)
+
 
 if __name__ == "__main__":
     unittest.main()
