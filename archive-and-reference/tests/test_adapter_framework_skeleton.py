@@ -161,6 +161,23 @@ class AdapterFrameworkSkeletonTests(unittest.TestCase):
             framework.adapter_metadata("missing"),
         )
 
+    def test_registered_adapter_count_tracks_registry_size(self) -> None:
+        framework = AdapterFramework()
+
+        self.assertEqual(0, framework.registered_adapter_count())
+        framework.register("one", ReferenceAdapterStub())
+        framework.register("two", ReferenceAdapterStub())
+        self.assertEqual(2, framework.registered_adapter_count())
+        framework.unregister("one")
+        self.assertEqual(1, framework.registered_adapter_count())
+
+    def test_is_registry_empty_reflects_registration_state(self) -> None:
+        framework = AdapterFramework()
+
+        self.assertTrue(framework.is_registry_empty())
+        framework.register("reference", ReferenceAdapterStub())
+        self.assertFalse(framework.is_registry_empty())
+
 
 if __name__ == "__main__":
     unittest.main()
