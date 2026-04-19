@@ -102,6 +102,68 @@ class ReadinessGateTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "conformance_score_pct"):
             load_scorecard_artifact(temp_path)
 
+    def test_overall_rollup_prefers_block_over_watch(self) -> None:
+        payload = {
+            "generated_at_utc": "2026-04-19T00:00:00Z",
+            "profiles": [
+                {
+                    "profile": "ntcip",
+                    "metrics": {
+                        "capability_coverage_pct": 100.0,
+                        "mapping_consistency_pct": 100.0,
+                        "validation_pass_rate_pct": 100.0,
+                        "conformance_score_pct": 100.0,
+                    },
+                    "drift": {
+                        "changed_mappings": 0,
+                        "removed_mappings": 0,
+                        "added_mappings": 0,
+                    },
+                    "fail_triggered": False,
+                    "fail_reasons": [],
+                },
+                {
+                    "profile": "solari",
+                    "metrics": {
+                        "capability_coverage_pct": 100.0,
+                        "mapping_consistency_pct": 100.0,
+                        "validation_pass_rate_pct": 100.0,
+                        "conformance_score_pct": 90.0,
+                    },
+                    "drift": {
+                        "changed_mappings": 1,
+                        "removed_mappings": 0,
+                        "added_mappings": 0,
+                    },
+                    "fail_triggered": False,
+                    "fail_reasons": [],
+                },
+                {
+                    "profile": "yaham",
+                    "metrics": {
+                        "capability_coverage_pct": 90.0,
+                        "mapping_consistency_pct": 90.0,
+                        "validation_pass_rate_pct": 90.0,
+                        "conformance_score_pct": 90.0,
+                    },
+                    "drift": {
+                        "changed_mappings": 1,
+                        "removed_mappings": 1,
+                        "added_mappings": 0,
+                    },
+                    "fail_triggered": True,
+                    "fail_reasons": ["removed_mappings_exceeded:1>0"],
+                },
+            ],
+        }
+
+        readiness = evaluate_readiness_gates(payload)
+        self.assertEqual("block", readiness["overall_posture"])
+        postures = {item["profile"]: item["posture"] for item in readiness["profiles"]}
+        self.assertEqual("ready", postures["ntcip"])
+        self.assertEqual("watch", postures["solari"])
+        self.assertEqual("block", postures["yaham"])
+
 
 if __name__ == "__main__":
     unittest.main()
