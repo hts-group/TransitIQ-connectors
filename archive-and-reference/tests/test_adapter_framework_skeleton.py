@@ -303,6 +303,16 @@ class AdapterFrameworkSkeletonTests(unittest.TestCase):
         self.assertEqual("adapter_lifecycle_error", response.error_code)
         self.assertTrue(response.error_message)
 
+    def test_contract_surface_exposes_request_response_and_errors(self) -> None:
+        framework = AdapterFramework()
+
+        surface = framework.contract_surface()
+
+        self.assertEqual(["route", "payload"], surface["request"])
+        self.assertIn("error_code", surface["response"])
+        self.assertIn("connect", surface["lifecycle_hooks"])
+        self.assertIn("adapter_route_error", surface["framework_error_codes"])
+
 
 if __name__ == "__main__":
     unittest.main()
