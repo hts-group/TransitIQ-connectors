@@ -58,6 +58,8 @@ class AdapterInterface(Protocol):
 class AdapterFramework:
     """Minimal adapter registry and router for connector-side framework wiring."""
 
+    CONTRACT_SURFACE_VERSION = "1.0.0"
+
     def __init__(self) -> None:
         self._adapters: Dict[str, AdapterInterface] = {}
 
@@ -141,6 +143,12 @@ class AdapterFramework:
 
     def contract_surface(self) -> Dict[str, Any]:
         return {
+            "contract_surface_version": self.CONTRACT_SURFACE_VERSION,
+            "contracts": [
+                "AdapterRequest",
+                "AdapterResponse",
+                "AdapterLifecycleSnapshot",
+            ],
             "request": ["route", "payload"],
             "response": ["ok", "route", "result", "error_code", "error_message"],
             "lifecycle_hooks": ["connect", "read", "normalize", "health"],

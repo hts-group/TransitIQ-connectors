@@ -308,6 +308,11 @@ class AdapterFrameworkSkeletonTests(unittest.TestCase):
 
         surface = framework.contract_surface()
 
+        self.assertEqual("1.0.0", surface["contract_surface_version"])
+        self.assertEqual(
+            ["AdapterRequest", "AdapterResponse", "AdapterLifecycleSnapshot"],
+            surface["contracts"],
+        )
         self.assertEqual(["route", "payload"], surface["request"])
         self.assertIn("error_code", surface["response"])
         self.assertIn("connect", surface["lifecycle_hooks"])
