@@ -109,6 +109,13 @@ class AdapterFramework:
     def is_registry_empty(self) -> bool:
         return self.registered_adapter_count() == 0
 
+    def registry_summary(self) -> Dict[str, Any]:
+        return {
+            "adapter_count": self.registered_adapter_count(),
+            "adapter_ids": self.list_registered_adapters(),
+            "supported_routes": self.supported_routes_snapshot(),
+        }
+
     def route(self, adapter_id: str, request: AdapterRequest) -> AdapterResponse:
         adapter = self._adapters.get(adapter_id)
         if adapter is None:
