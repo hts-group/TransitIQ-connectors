@@ -1,6 +1,6 @@
 # Execution Plan - Issue #2 Adapter Framework Skeleton (Round 10 Capabilities Snapshot)
 
-Status: Active (claimed slice delivered; awaiting PM verification)
+Status: Closed (claimed slice delivered and merged)
 Owner: Connectors / Integrations agent
 Last updated: 2026-04-19
 
@@ -40,7 +40,13 @@ Current blockers: None.
 
 ## Closure Evidence
 
-- Pending: milestone comment link
-- Pending: commit link
-- Pending: PR link
-- Pending: validation command
+- Milestone comment link:
+	- https://github.com/hts-group/TransitIQ-connectors/issues/2#issuecomment-4275040858
+- Commit link:
+	- https://github.com/hts-group/TransitIQ-connectors/commit/30c06ba19859a0a9ba8b17d4f40c1ed4189dcfaa
+- PR link:
+	- https://github.com/hts-group/TransitIQ-connectors/pull/38
+- Merge commit on main:
+	- https://github.com/hts-group/TransitIQ-connectors/commit/f90ffa03fe80a3f37678f07bd0c73438564bffbb
+- Validation command:
+	- `c:\Users\marsh\Documents\HTS\TransitIQ\connectors\archive-and-reference\.venv\Scripts\python.exe -m unittest tests.test_adapter_framework_skeleton -v`
