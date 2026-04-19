@@ -142,8 +142,15 @@ class AdapterFramework:
             "supported_routes": self.supported_routes_snapshot(),
         }
 
+    def contract_coordinates(self) -> Dict[str, str]:
+        return {
+            "id": self.CONTRACT_SURFACE_ID,
+            "version": self.CONTRACT_SURFACE_VERSION,
+        }
+
     def contract_surface(self) -> Dict[str, Any]:
         return {
+            "contract_coordinates": self.contract_coordinates(),
             "contract_surface_id": self.CONTRACT_SURFACE_ID,
             "contract_surface_version": self.CONTRACT_SURFACE_VERSION,
             "contracts": [
