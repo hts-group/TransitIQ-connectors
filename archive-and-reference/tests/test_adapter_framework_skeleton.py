@@ -207,6 +207,52 @@ class AdapterFrameworkSkeletonTests(unittest.TestCase):
             framework.registry_summary(),
         )
 
+    def test_reference_adapter_lifecycle_hooks_return_structured_output(self) -> None:
+        adapter = ReferenceAdapterStub()
+
+        self.assertTrue(adapter.connect()["connected"])
+        self.assertEqual("ready", adapter.read()["state"])
+        self.assertTrue(adapter.normalize({"x": 1})["normalized"])
+        self.assertEqual("ok", adapter.health()["status"])
+
+    def test_framework_maps_adapter_route_exceptions(self) -> None:
+        class FaultyAdapter:
+            SUPPORTED_ROUTES = {"health"}
+
+            def connect(self):
+                return {}
+
+            def read(self):
+                return {}
+
+            def normalize(self, payload):
+                return payload
+
+            def health(self):
+                return {"status": "ok"}
+
+            def route_request(self, request):
+                raise ValueError("forced failure")
+
+        framework = AdapterFramework()
+        framework.register("faulty", FaultyAdapter())
+
+        response = framework.route("faulty", AdapterRequest(route="health", payload={}))
+
+        self.assertFalse(response.ok)
+        self.assertEqual("adapter_route_error", response.error_code)
+        self.assertTrue(response.error_message)
+
+    def test_smoke_adapter_loads_routes_and_returns_structured_output(self) -> None:
+        framework = AdapterFramework()
+        framework.register("reference", ReferenceAdapterStub())
+
+        response = framework.route("reference", AdapterRequest(route="echo", payload={"k": "v"}))
+
+        self.assertTrue(response.ok)
+        self.assertEqual("echo", response.route)
+        self.assertEqual({"k": "v"}, response.result["payload"])
+
 
 if __name__ == "__main__":
     unittest.main()

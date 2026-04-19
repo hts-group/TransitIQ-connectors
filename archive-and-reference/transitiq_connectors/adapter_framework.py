@@ -28,6 +28,18 @@ class AdapterResponse:
 class AdapterInterface(Protocol):
     """Contract skeleton for adapter routing behavior."""
 
+    def connect(self) -> Dict[str, Any]:
+        """Establish adapter connection lifecycle hook."""
+
+    def read(self) -> Dict[str, Any]:
+        """Read adapter state lifecycle hook."""
+
+    def normalize(self, payload: Dict[str, Any]) -> Dict[str, Any]:
+        """Normalize adapter payload lifecycle hook."""
+
+    def health(self) -> Dict[str, Any]:
+        """Return adapter health lifecycle hook output."""
+
     def route_request(self, request: AdapterRequest) -> AdapterResponse:
         """Route a connector-local request to a supported adapter surface."""
 
@@ -126,14 +138,34 @@ class AdapterFramework:
                 error_code="adapter_not_found",
                 error_message=f"Adapter '{adapter_id}' is not registered.",
             )
-
-        return adapter.route_request(request)
+        try:
+            return adapter.route_request(request)
+        except Exception as exc:
+            return AdapterResponse(
+                ok=False,
+                route=request.route,
+                result={},
+                error_code="adapter_route_error",
+                error_message=f"Adapter route execution failed: {exc}",
+            )
 
 
 class ReferenceAdapterStub:
     """Reference stub demonstrating contract-compliant route handling."""
 
     SUPPORTED_ROUTES = {"health", "echo"}
+
+    def connect(self) -> Dict[str, Any]:
+        return {"connected": True, "adapter": "reference_stub"}
+
+    def read(self) -> Dict[str, Any]:
+        return {"source": "reference_stub", "state": "ready"}
+
+    def normalize(self, payload: Dict[str, Any]) -> Dict[str, Any]:
+        return {"payload": payload, "normalized": True}
+
+    def health(self) -> Dict[str, Any]:
+        return {"status": "ok", "adapter": "reference_stub"}
 
     def route_request(self, request: AdapterRequest) -> AdapterResponse:
         if request.route == "health":
