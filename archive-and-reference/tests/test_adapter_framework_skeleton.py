@@ -107,6 +107,17 @@ class AdapterFrameworkSkeletonTests(unittest.TestCase):
         framework.unregister("reference")
         self.assertFalse(framework.has_adapter("reference"))
 
+    def test_list_supported_routes_for_registered_adapter(self) -> None:
+        framework = AdapterFramework()
+        framework.register("reference", ReferenceAdapterStub())
+
+        self.assertEqual(["echo", "health"], framework.list_supported_routes("reference"))
+
+    def test_list_supported_routes_for_missing_adapter_is_empty(self) -> None:
+        framework = AdapterFramework()
+
+        self.assertEqual([], framework.list_supported_routes("missing"))
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -70,6 +70,17 @@ class AdapterFramework:
 
         return route in supported_routes
 
+    def list_supported_routes(self, adapter_id: str) -> list[str]:
+        adapter = self._adapters.get(adapter_id)
+        if adapter is None:
+            return []
+
+        supported_routes = getattr(adapter, "SUPPORTED_ROUTES", None)
+        if supported_routes is None:
+            return []
+
+        return sorted(supported_routes)
+
     def route(self, adapter_id: str, request: AdapterRequest) -> AdapterResponse:
         adapter = self._adapters.get(adapter_id)
         if adapter is None:
