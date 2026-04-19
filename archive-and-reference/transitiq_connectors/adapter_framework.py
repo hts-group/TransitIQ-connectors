@@ -139,6 +139,18 @@ class AdapterFramework:
             "supported_routes": self.supported_routes_snapshot(),
         }
 
+    def contract_surface(self) -> Dict[str, Any]:
+        return {
+            "request": ["route", "payload"],
+            "response": ["ok", "route", "result", "error_code", "error_message"],
+            "lifecycle_hooks": ["connect", "read", "normalize", "health"],
+            "framework_error_codes": [
+                "adapter_not_found",
+                "adapter_route_error",
+                "adapter_lifecycle_error",
+            ],
+        }
+
     def route(self, adapter_id: str, request: AdapterRequest) -> AdapterResponse:
         adapter = self._adapters.get(adapter_id)
         if adapter is None:
