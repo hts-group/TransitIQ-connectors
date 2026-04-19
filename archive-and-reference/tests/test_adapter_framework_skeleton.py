@@ -341,6 +341,31 @@ class AdapterFrameworkSkeletonTests(unittest.TestCase):
         self.assertIn("connect", surface["lifecycle_hooks"])
         self.assertIn("adapter_route_error", surface["framework_error_codes"])
 
+    def test_smoke_validation_report_for_registered_adapter(self) -> None:
+        framework = AdapterFramework()
+        framework.register("reference", ReferenceAdapterStub())
+
+        report = framework.smoke_validation_report("reference", {"k": "v"})
+
+        self.assertTrue(report["adapter_loaded"])
+        self.assertTrue(report["route"]["ok"])
+        self.assertEqual("echo", report["route"]["route"])
+        self.assertEqual({"k": "v"}, report["route"]["result"]["payload"])
+        self.assertTrue(report["lifecycle"]["ok"])
+        self.assertEqual("lifecycle", report["lifecycle"]["route"])
+        self.assertEqual("reference", report["lifecycle"]["result"]["adapter_id"])
+
+    def test_smoke_validation_report_for_missing_adapter(self) -> None:
+        framework = AdapterFramework()
+
+        report = framework.smoke_validation_report("missing", {"k": "v"})
+
+        self.assertFalse(report["adapter_loaded"])
+        self.assertFalse(report["route"]["ok"])
+        self.assertEqual("adapter_not_found", report["route"]["error_code"])
+        self.assertFalse(report["lifecycle"]["ok"])
+        self.assertEqual("adapter_not_found", report["lifecycle"]["error_code"])
+
 
 if __name__ == "__main__":
     unittest.main()
