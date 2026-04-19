@@ -89,6 +89,24 @@ class AdapterFrameworkSkeletonTests(unittest.TestCase):
         self.assertFalse(response.ok)
         self.assertEqual("adapter_not_found", response.error_code)
 
+    def test_register_or_replace_reports_new_then_replace(self) -> None:
+        framework = AdapterFramework()
+
+        first = framework.register_or_replace("reference", ReferenceAdapterStub())
+        second = framework.register_or_replace("reference", ReferenceAdapterStub())
+
+        self.assertFalse(first)
+        self.assertTrue(second)
+
+    def test_has_adapter_tracks_registration_and_unregistration(self) -> None:
+        framework = AdapterFramework()
+
+        self.assertFalse(framework.has_adapter("reference"))
+        framework.register("reference", ReferenceAdapterStub())
+        self.assertTrue(framework.has_adapter("reference"))
+        framework.unregister("reference")
+        self.assertFalse(framework.has_adapter("reference"))
+
 
 if __name__ == "__main__":
     unittest.main()
