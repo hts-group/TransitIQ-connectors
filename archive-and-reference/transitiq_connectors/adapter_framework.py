@@ -25,6 +25,17 @@ class AdapterResponse:
     error_message: str | None = None
 
 
+@dataclass(frozen=True)
+class AdapterLifecycleSnapshot:
+    """Typed lifecycle snapshot for connect/read/normalize/health stages."""
+
+    adapter_id: str
+    connected: Dict[str, Any]
+    read_state: Dict[str, Any]
+    normalized: Dict[str, Any]
+    health: Dict[str, Any]
+
+
 class AdapterInterface(Protocol):
     """Contract skeleton for adapter routing behavior."""
 
@@ -147,6 +158,45 @@ class AdapterFramework:
                 result={},
                 error_code="adapter_route_error",
                 error_message=f"Adapter route execution failed: {exc}",
+            )
+
+    def run_lifecycle(self, adapter_id: str, payload: Dict[str, Any]) -> AdapterResponse:
+        adapter = self._adapters.get(adapter_id)
+        if adapter is None:
+            return AdapterResponse(
+                ok=False,
+                route="lifecycle",
+                result={},
+                error_code="adapter_not_found",
+                error_message=f"Adapter '{adapter_id}' is not registered.",
+            )
+
+        try:
+            snapshot = AdapterLifecycleSnapshot(
+                adapter_id=adapter_id,
+                connected=adapter.connect(),
+                read_state=adapter.read(),
+                normalized=adapter.normalize(payload),
+                health=adapter.health(),
+            )
+            return AdapterResponse(
+                ok=True,
+                route="lifecycle",
+                result={
+                    "adapter_id": snapshot.adapter_id,
+                    "connected": snapshot.connected,
+                    "read_state": snapshot.read_state,
+                    "normalized": snapshot.normalized,
+                    "health": snapshot.health,
+                },
+            )
+        except Exception as exc:
+            return AdapterResponse(
+                ok=False,
+                route="lifecycle",
+                result={},
+                error_code="adapter_lifecycle_error",
+                error_message=f"Adapter lifecycle execution failed: {exc}",
             )
 
 

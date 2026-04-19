@@ -253,6 +253,56 @@ class AdapterFrameworkSkeletonTests(unittest.TestCase):
         self.assertEqual("echo", response.route)
         self.assertEqual({"k": "v"}, response.result["payload"])
 
+    def test_lifecycle_run_returns_structured_snapshot(self) -> None:
+        framework = AdapterFramework()
+        framework.register("reference", ReferenceAdapterStub())
+
+        response = framework.run_lifecycle("reference", {"k": "v"})
+
+        self.assertTrue(response.ok)
+        self.assertEqual("lifecycle", response.route)
+        self.assertEqual("reference", response.result["adapter_id"])
+        self.assertTrue(response.result["connected"]["connected"])
+        self.assertEqual("ready", response.result["read_state"]["state"])
+        self.assertTrue(response.result["normalized"]["normalized"])
+        self.assertEqual("ok", response.result["health"]["status"])
+
+    def test_lifecycle_run_for_missing_adapter_returns_not_found(self) -> None:
+        framework = AdapterFramework()
+
+        response = framework.run_lifecycle("missing", {"k": "v"})
+
+        self.assertFalse(response.ok)
+        self.assertEqual("adapter_not_found", response.error_code)
+
+    def test_lifecycle_run_maps_adapter_exceptions(self) -> None:
+        class FaultyLifecycleAdapter:
+            SUPPORTED_ROUTES = {"health"}
+
+            def connect(self):
+                raise RuntimeError("connect failed")
+
+            def read(self):
+                return {}
+
+            def normalize(self, payload):
+                return payload
+
+            def health(self):
+                return {"status": "ok"}
+
+            def route_request(self, request):
+                return None
+
+        framework = AdapterFramework()
+        framework.register("faulty_lifecycle", FaultyLifecycleAdapter())
+
+        response = framework.run_lifecycle("faulty_lifecycle", {"k": "v"})
+
+        self.assertFalse(response.ok)
+        self.assertEqual("adapter_lifecycle_error", response.error_code)
+        self.assertTrue(response.error_message)
+
 
 if __name__ == "__main__":
     unittest.main()
