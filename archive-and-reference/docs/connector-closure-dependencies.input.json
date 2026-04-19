@@ -1,0 +1,54 @@
+{
+  "dependencies": [
+    {
+      "canonical_contract": true,
+      "due_utc": "2026-04-21T18:00:00Z",
+      "id": "status-freeze",
+      "name": "Frozen status mapping envelope",
+      "owner": "TransitIQ-control-plane",
+      "remediation": "Confirm published canonical status mapping and update connector baseline evidence in issue #2.",
+      "severity": "high",
+      "status": "open"
+    },
+    {
+      "canonical_contract": true,
+      "due_utc": "2026-04-21T18:00:00Z",
+      "id": "telemetry-freeze",
+      "name": "Frozen telemetry naming/units",
+      "owner": "TransitIQ-control-plane",
+      "remediation": "Consume telemetry naming/units freeze output and re-run diagnostics generators.",
+      "severity": "high",
+      "status": "open"
+    },
+    {
+      "canonical_contract": true,
+      "due_utc": "2026-04-21T18:00:00Z",
+      "id": "command-semantics-freeze",
+      "name": "Frozen command-capability semantics",
+      "owner": "TransitIQ-control-plane",
+      "remediation": "Align adapter command capability declarations to frozen canonical semantics.",
+      "severity": "high",
+      "status": "open"
+    },
+    {
+      "canonical_contract": true,
+      "due_utc": "2026-04-21T18:00:00Z",
+      "id": "access-sessions-freeze",
+      "name": "accessSessions lifecycle freeze",
+      "owner": "TransitIQ-control-plane",
+      "remediation": "Consume lifecycle field/transition freeze confirmation and retire bridge assumptions accordingly.",
+      "severity": "critical",
+      "status": "open"
+    },
+    {
+      "canonical_contract": false,
+      "due_utc": "2026-04-21T18:00:00Z",
+      "id": "readiness-governance-closure",
+      "name": "Readiness-gate governance closure confirmation",
+      "owner": "TransitIQ-control-plane + Architect",
+      "remediation": "Publish governance closure confirmation and link evidence in issue #2 checkpoint.",
+      "severity": "medium",
+      "status": "open"
+    }
+  ]
+}
