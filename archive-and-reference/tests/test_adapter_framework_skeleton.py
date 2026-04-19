@@ -52,6 +52,21 @@ class AdapterFrameworkSkeletonTests(unittest.TestCase):
         self.assertEqual("adapter_not_found", response.error_code)
         self.assertTrue(response.error_message)
 
+    def test_framework_lists_registered_adapters_sorted(self) -> None:
+        framework = AdapterFramework()
+        framework.register("zeta", ReferenceAdapterStub())
+        framework.register("alpha", ReferenceAdapterStub())
+
+        self.assertEqual(["alpha", "zeta"], framework.list_registered_adapters())
+
+    def test_framework_supports_known_and_unknown_routes(self) -> None:
+        framework = AdapterFramework()
+        framework.register("reference", ReferenceAdapterStub())
+
+        self.assertTrue(framework.supports_route("reference", "health"))
+        self.assertFalse(framework.supports_route("reference", "configure"))
+        self.assertFalse(framework.supports_route("missing", "health"))
+
 
 if __name__ == "__main__":
     unittest.main()
