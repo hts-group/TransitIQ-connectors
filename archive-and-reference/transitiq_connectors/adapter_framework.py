@@ -32,6 +32,29 @@ class AdapterInterface(Protocol):
         """Route a connector-local request to a supported adapter surface."""
 
 
+class AdapterFramework:
+    """Minimal adapter registry and router for connector-side framework wiring."""
+
+    def __init__(self) -> None:
+        self._adapters: Dict[str, AdapterInterface] = {}
+
+    def register(self, adapter_id: str, adapter: AdapterInterface) -> None:
+        self._adapters[adapter_id] = adapter
+
+    def route(self, adapter_id: str, request: AdapterRequest) -> AdapterResponse:
+        adapter = self._adapters.get(adapter_id)
+        if adapter is None:
+            return AdapterResponse(
+                ok=False,
+                route=request.route,
+                result={},
+                error_code="adapter_not_found",
+                error_message=f"Adapter '{adapter_id}' is not registered.",
+            )
+
+        return adapter.route_request(request)
+
+
 class ReferenceAdapterStub:
     """Reference stub demonstrating contract-compliant route handling."""
 
