@@ -1,6 +1,6 @@
 # Execution Plan - Issue #2 Adapter Framework Skeleton (Round 14 Checklist Closeout)
 
-Status: Active (claimed slice delivered; awaiting PM verification)
+Status: Closed (claimed slice delivered and merged)
 Owner: Connectors / Integrations agent
 Last updated: 2026-04-19
 
@@ -41,7 +41,13 @@ Current blockers: None.
 
 ## Closure Evidence
 
-- Pending: milestone comment link
-- Pending: commit link
-- Pending: PR link
-- Pending: validation command and output snippet
+- Milestone comment link:
+	- https://github.com/hts-group/TransitIQ-connectors/issues/2#issuecomment-4275059429
+- Commit link:
+	- https://github.com/hts-group/TransitIQ-connectors/commit/b58e826e74f5c7c478c195e206e7959886502d54
+- PR link:
+	- https://github.com/hts-group/TransitIQ-connectors/pull/46
+- Merge commit on main:
+	- https://github.com/hts-group/TransitIQ-connectors/commit/e4dfbc6697c11e1c725051cac262c0735ca35011
+- Validation command:
+	- `c:\Users\marsh\Documents\HTS\TransitIQ\connectors\archive-and-reference\.venv\Scripts\python.exe -m unittest tests.test_adapter_framework_skeleton -v`
