@@ -70,3 +70,34 @@ Operator response:
 2. `watch`: proceed only with explicit tracking of prioritized blocker burn-down.
 3. `block`: hold release candidate checkpoint until priority-1 blockers are
    remediated and gate output is re-generated.
+
+## Closure Dependency Diagnostics
+
+Input artifacts:
+
+- `docs/connector-closure-dependencies.input.json`
+- `docs/connector-release-candidate-gates.latest.json`
+
+Output artifact:
+
+- `docs/connector-closure-remediation.latest.json`
+
+Diagnostic posture rule:
+
+1. `block` if release-candidate disposition is `block`.
+2. `block` if any open dependency is overdue.
+3. `watch` when open dependencies remain but none are overdue.
+4. `ready` only when all closure dependencies are consumed or closed.
+
+Remediation ordering rule:
+
+- Remediation is sorted by priority with deterministic ties: overdue first,
+  canonical-contract dependencies before non-canonical dependencies, then due
+  date and dependency name.
+
+Operator response:
+
+1. `ready`: maintain dependency-watch checkpoint cadence.
+2. `watch`: execute highest-priority remediation items before next checkpoint.
+3. `block`: escalate overdue dependency owners and post escalation evidence in
+  issue #2 before requesting closure.

@@ -1,0 +1,75 @@
+{
+  "closure_posture": "watch",
+  "generated_at_utc": "2026-04-19T01:35:37Z",
+  "prioritized_remediation": [
+    {
+      "canonical_contract": true,
+      "dependency": "Frozen command-capability semantics",
+      "dependency_id": "command-semantics-freeze",
+      "due_utc": "2026-04-21T18:00:00Z",
+      "overdue": false,
+      "owner": "TransitIQ-control-plane",
+      "priority": 1,
+      "recommended_action": "Align adapter command capability declarations to frozen canonical semantics.",
+      "severity": "high",
+      "status": "open"
+    },
+    {
+      "canonical_contract": true,
+      "dependency": "Frozen status mapping envelope",
+      "dependency_id": "status-freeze",
+      "due_utc": "2026-04-21T18:00:00Z",
+      "overdue": false,
+      "owner": "TransitIQ-control-plane",
+      "priority": 1,
+      "recommended_action": "Confirm published canonical status mapping and update connector baseline evidence in issue #2.",
+      "severity": "high",
+      "status": "open"
+    },
+    {
+      "canonical_contract": true,
+      "dependency": "Frozen telemetry naming/units",
+      "dependency_id": "telemetry-freeze",
+      "due_utc": "2026-04-21T18:00:00Z",
+      "overdue": false,
+      "owner": "TransitIQ-control-plane",
+      "priority": 1,
+      "recommended_action": "Consume telemetry naming/units freeze output and re-run diagnostics generators.",
+      "severity": "high",
+      "status": "open"
+    },
+    {
+      "canonical_contract": true,
+      "dependency": "accessSessions lifecycle freeze",
+      "dependency_id": "access-sessions-freeze",
+      "due_utc": "2026-04-21T18:00:00Z",
+      "overdue": false,
+      "owner": "TransitIQ-control-plane",
+      "priority": 1,
+      "recommended_action": "Consume lifecycle field/transition freeze confirmation and retire bridge assumptions accordingly.",
+      "severity": "critical",
+      "status": "open"
+    },
+    {
+      "canonical_contract": false,
+      "dependency": "Readiness-gate governance closure confirmation",
+      "dependency_id": "readiness-governance-closure",
+      "due_utc": "2026-04-21T18:00:00Z",
+      "overdue": false,
+      "owner": "TransitIQ-control-plane + Architect",
+      "priority": 3,
+      "recommended_action": "Publish governance closure confirmation and link evidence in issue #2 checkpoint.",
+      "severity": "medium",
+      "status": "open"
+    }
+  ],
+  "release_candidate_disposition": "ready",
+  "summary": {
+    "open_canonical_contract_dependencies": 4,
+    "open_dependencies": 5,
+    "overdue_dependencies": 0,
+    "release_candidate_blockers": 0,
+    "resolved_dependencies": 0,
+    "total_dependencies": 5
+  }
+}
