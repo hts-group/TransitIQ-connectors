@@ -58,6 +58,7 @@ class AdapterInterface(Protocol):
 class AdapterFramework:
     """Minimal adapter registry and router for connector-side framework wiring."""
 
+    CONTRACT_SURFACE_ID = "transitiq.connectors.adapter_framework.contract_surface"
     CONTRACT_SURFACE_VERSION = "1.0.0"
 
     def __init__(self) -> None:
@@ -143,6 +144,7 @@ class AdapterFramework:
 
     def contract_surface(self) -> Dict[str, Any]:
         return {
+            "contract_surface_id": self.CONTRACT_SURFACE_ID,
             "contract_surface_version": self.CONTRACT_SURFACE_VERSION,
             "contracts": [
                 "AdapterRequest",
