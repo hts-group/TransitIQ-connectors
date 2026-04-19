@@ -178,6 +178,35 @@ class AdapterFrameworkSkeletonTests(unittest.TestCase):
         framework.register("reference", ReferenceAdapterStub())
         self.assertFalse(framework.is_registry_empty())
 
+    def test_registry_summary_for_empty_framework(self) -> None:
+        framework = AdapterFramework()
+
+        self.assertEqual(
+            {
+                "adapter_count": 0,
+                "adapter_ids": [],
+                "supported_routes": {},
+            },
+            framework.registry_summary(),
+        )
+
+    def test_registry_summary_for_populated_framework(self) -> None:
+        framework = AdapterFramework()
+        framework.register("b", ReferenceAdapterStub())
+        framework.register("a", ReferenceAdapterStub())
+
+        self.assertEqual(
+            {
+                "adapter_count": 2,
+                "adapter_ids": ["a", "b"],
+                "supported_routes": {
+                    "a": ["echo", "health"],
+                    "b": ["echo", "health"],
+                },
+            },
+            framework.registry_summary(),
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
