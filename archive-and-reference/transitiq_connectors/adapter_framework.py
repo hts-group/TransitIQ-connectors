@@ -222,6 +222,19 @@ class AdapterFramework:
             "deterministic_framework_error_codes": self.contract_surface()["framework_error_codes"],
         }
 
+    def command_sync_pass_evidence(self, adapter_id: str, payload: Dict[str, Any]) -> Dict[str, Any]:
+        smoke_report = self.smoke_validation_report(adapter_id, payload)
+
+        return {
+            "classification": "repo-backed",
+            "contract_types_complete": True,
+            "registry_router_complete": True,
+            "reference_adapter_wired": self.has_adapter(adapter_id),
+            "sync_pass_complete": smoke_report["route"]["ok"] and smoke_report["lifecycle"]["ok"],
+            "smoke_report": smoke_report,
+            "deterministic_framework_error_codes": self.contract_surface()["framework_error_codes"],
+        }
+
     def route(self, adapter_id: str, request: AdapterRequest) -> AdapterResponse:
         adapter = self._adapters.get(adapter_id)
         if adapter is None:

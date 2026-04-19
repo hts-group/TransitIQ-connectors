@@ -417,6 +417,34 @@ class AdapterFrameworkSkeletonTests(unittest.TestCase):
             evidence["smoke_profile"]["smoke"]["route"]["error_code"],
         )
 
+    def test_command_sync_pass_evidence_for_registered_adapter(self) -> None:
+        framework = AdapterFramework()
+        framework.register("reference", ReferenceAdapterStub())
+
+        evidence = framework.command_sync_pass_evidence("reference", {"k": "v"})
+
+        self.assertEqual("repo-backed", evidence["classification"])
+        self.assertTrue(evidence["contract_types_complete"])
+        self.assertTrue(evidence["registry_router_complete"])
+        self.assertTrue(evidence["reference_adapter_wired"])
+        self.assertTrue(evidence["sync_pass_complete"])
+        self.assertTrue(evidence["smoke_report"]["route"]["ok"])
+        self.assertTrue(evidence["smoke_report"]["lifecycle"]["ok"])
+
+    def test_command_sync_pass_evidence_for_missing_adapter(self) -> None:
+        framework = AdapterFramework()
+
+        evidence = framework.command_sync_pass_evidence("missing", {"k": "v"})
+
+        self.assertEqual("repo-backed", evidence["classification"])
+        self.assertFalse(evidence["reference_adapter_wired"])
+        self.assertFalse(evidence["sync_pass_complete"])
+        self.assertEqual("adapter_not_found", evidence["smoke_report"]["route"]["error_code"])
+        self.assertEqual(
+            "adapter_not_found",
+            evidence["smoke_report"]["lifecycle"]["error_code"],
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
