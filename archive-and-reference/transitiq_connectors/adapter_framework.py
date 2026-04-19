@@ -1,0 +1,61 @@
+"""Minimal adapter framework skeleton for connector-side contract routing."""
+
+from __future__ import annotations
+
+from dataclasses import dataclass
+from typing import Any, Dict, Protocol
+
+
+@dataclass(frozen=True)
+class AdapterRequest:
+    """Connector-local request envelope for adapter route handling."""
+
+    route: str
+    payload: Dict[str, Any]
+
+
+@dataclass(frozen=True)
+class AdapterResponse:
+    """Connector-local response envelope with explicit error surface."""
+
+    ok: bool
+    route: str
+    result: Dict[str, Any]
+    error_code: str | None = None
+    error_message: str | None = None
+
+
+class AdapterInterface(Protocol):
+    """Contract skeleton for adapter routing behavior."""
+
+    def route_request(self, request: AdapterRequest) -> AdapterResponse:
+        """Route a connector-local request to a supported adapter surface."""
+
+
+class ReferenceAdapterStub:
+    """Reference stub demonstrating contract-compliant route handling."""
+
+    SUPPORTED_ROUTES = {"health", "echo"}
+
+    def route_request(self, request: AdapterRequest) -> AdapterResponse:
+        if request.route == "health":
+            return AdapterResponse(
+                ok=True,
+                route=request.route,
+                result={"status": "ok", "adapter": "reference_stub"},
+            )
+
+        if request.route == "echo":
+            return AdapterResponse(
+                ok=True,
+                route=request.route,
+                result={"payload": request.payload},
+            )
+
+        return AdapterResponse(
+            ok=False,
+            route=request.route,
+            result={},
+            error_code="unsupported_route",
+            error_message="Route is not supported by reference stub.",
+        )
