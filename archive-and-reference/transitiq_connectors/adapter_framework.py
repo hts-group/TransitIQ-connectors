@@ -81,6 +81,13 @@ class AdapterFramework:
 
         return sorted(supported_routes)
 
+    def supported_routes_snapshot(self) -> Dict[str, list[str]]:
+        snapshot: Dict[str, list[str]] = {}
+        for adapter_id in self.list_registered_adapters():
+            snapshot[adapter_id] = self.list_supported_routes(adapter_id)
+
+        return snapshot
+
     def route(self, adapter_id: str, request: AdapterRequest) -> AdapterResponse:
         adapter = self._adapters.get(adapter_id)
         if adapter is None:
