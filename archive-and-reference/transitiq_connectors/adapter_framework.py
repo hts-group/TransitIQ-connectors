@@ -152,8 +152,16 @@ class AdapterFramework:
         coordinates = self.contract_coordinates()
         return f"{coordinates['id']}@{coordinates['version']}"
 
+    def contract_signature(self) -> Dict[str, str]:
+        return {
+            "id": self.CONTRACT_SURFACE_ID,
+            "version": self.CONTRACT_SURFACE_VERSION,
+            "fingerprint": self.contract_fingerprint(),
+        }
+
     def contract_surface(self) -> Dict[str, Any]:
         return {
+            "contract_signature": self.contract_signature(),
             "contract_fingerprint": self.contract_fingerprint(),
             "contract_coordinates": self.contract_coordinates(),
             "contract_surface_id": self.CONTRACT_SURFACE_ID,
