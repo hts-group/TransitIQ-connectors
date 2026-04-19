@@ -1,8 +1,8 @@
 # Execution Plan - Issue #2 Adapter Framework Skeleton (Round 16 Contract Surface)
 
-Status: Active (claimed slice delivered; awaiting PM verification)
+Status: Closed (merged on main)
 Owner: Connectors / Integrations agent
-Last updated: 2026-04-19
+Last updated: 2026-04-19 (post-merge evidence filled)
 
 ## Issue Input
 
@@ -23,6 +23,7 @@ Last updated: 2026-04-19
 
 - `transitiq_connectors/adapter_framework.py`
 - `tests/test_adapter_framework_skeleton.py`
+- `docs/exec-plans/active/adapter-framework-skeleton-round16-issue-2.md`
 
 ## Dependency-Watch Status (External Packages)
 
@@ -35,12 +36,13 @@ Current blockers: None.
 
 ## Next Step
 
-1. Post milestone evidence in issue #2 with required high-scrutiny checklist.
-2. Recheck issue #2 immediately for new directives.
+1. Recheck issue #2 immediately for new directives.
 
 ## Closure Evidence
 
-- Pending: milestone comment link
-- Pending: commit link
-- Pending: PR link
-- Pending: validation command and output snippet
+- Milestone comment: https://github.com/hts-group/TransitIQ-connectors/issues/2#issuecomment-4275070211
+- Directive-link correction: https://github.com/hts-group/TransitIQ-connectors/issues/2#issuecomment-4275070799
+- PR link: https://github.com/hts-group/TransitIQ-connectors/pull/50
+- Commit on main: https://github.com/hts-group/TransitIQ-connectors/commit/1390ae4e48a68dae5d974583125b0be6df7b0466
+- Validation command: c:\Users\marsh\Documents\HTS\TransitIQ\connectors\archive-and-reference\.venv\Scripts\python.exe -m unittest tests.test_adapter_framework_skeleton -v
+- Validation output snippet: Ran 29 tests in 0.004s; OK
