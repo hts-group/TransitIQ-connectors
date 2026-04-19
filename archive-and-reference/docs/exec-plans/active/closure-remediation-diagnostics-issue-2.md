@@ -1,6 +1,6 @@
 # Execution Plan - Issue #2 Closure Dependency Remediation Diagnostics
 
-Status: Active (claimed slice delivered; awaiting PM verification)
+Status: Closed (delivered, merged, and milestone evidence posted)
 Owner: Connectors / Integrations agent
 Last updated: 2026-04-19
 
@@ -33,12 +33,20 @@ Current blockers: None.
 
 ## Next Step
 
-1. Post commit/PR-backed milestone evidence in issue #2.
-2. Recheck issue #2 immediately for new PM directives.
+1. Continue dependency-watch checkpoint cadence in issue #2 until due-window
+  gate execution.
+2. Claim next PM-opened connectors implementation slice when available.
 
 ## Closure Evidence
 
-- Pending: milestone comment link
-- Pending: commit link
-- Pending: PR link
-- Pending: validation commands
+- Issue #2 milestone comment:
+  - https://github.com/hts-group/TransitIQ-connectors/issues/2#issuecomment-4274940761
+- Commit:
+  - https://github.com/hts-group/TransitIQ-connectors/commit/d2081865a9fabe121f209bd7586b8a85a78edd94
+- PR:
+  - https://github.com/hts-group/TransitIQ-connectors/pull/18
+- PR #18 merge commit on main:
+  - https://github.com/hts-group/TransitIQ-connectors/commit/f2cd2f116d1f579f1b05c3375827dfbf263fb1ac
+- Validation:
+  - `python -m transitiq_connectors.closure_dependency_diagnostics`
+  - `python -m unittest tests.test_closure_dependency_diagnostics -v`
