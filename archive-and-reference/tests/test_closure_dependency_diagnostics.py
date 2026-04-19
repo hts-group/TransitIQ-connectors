@@ -236,6 +236,53 @@ class ClosureDependencyDiagnosticsTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "prioritized_blockers"):
             load_release_candidate_gate(rc_path)
 
+    def test_priority_sort_prefers_overdue_then_canonical_then_due_date(self) -> None:
+        dependency_input = {
+            "dependencies": [
+                {
+                    "id": "noncanonical-overdue",
+                    "name": "Non-canonical overdue dependency",
+                    "owner": "TransitIQ-control-plane",
+                    "status": "open",
+                    "severity": "high",
+                    "canonical_contract": False,
+                    "due_utc": "2026-04-18T18:00:00Z",
+                    "remediation": "Follow up.",
+                },
+                {
+                    "id": "canonical-earlier",
+                    "name": "Canonical earlier due dependency",
+                    "owner": "TransitIQ-control-plane",
+                    "status": "open",
+                    "severity": "high",
+                    "canonical_contract": True,
+                    "due_utc": "2026-04-20T18:00:00Z",
+                    "remediation": "Follow up.",
+                },
+                {
+                    "id": "canonical-later",
+                    "name": "Canonical later due dependency",
+                    "owner": "TransitIQ-control-plane",
+                    "status": "open",
+                    "severity": "high",
+                    "canonical_contract": True,
+                    "due_utc": "2026-04-21T18:00:00Z",
+                    "remediation": "Follow up.",
+                },
+            ]
+        }
+
+        diagnostics = evaluate_closure_diagnostics(
+            dependency_input,
+            self._release_candidate_ready(),
+            now_utc=datetime(2026, 4, 19, 0, 0, 0, tzinfo=timezone.utc),
+        )
+
+        ordered_ids = [item["dependency_id"] for item in diagnostics["prioritized_remediation"]]
+        self.assertEqual("noncanonical-overdue", ordered_ids[0])
+        self.assertEqual("canonical-earlier", ordered_ids[1])
+        self.assertEqual("canonical-later", ordered_ids[2])
+
 
 if __name__ == "__main__":
     unittest.main()
