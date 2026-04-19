@@ -195,6 +195,34 @@ class ReadinessGateTests(unittest.TestCase):
         categories = [item["category"] for item in recommendations]
         self.assertIn("threshold_fail_reason", categories)
 
+    def test_watch_recommendations_include_coverage_and_validation_gaps(self) -> None:
+        payload = self._scorecard_payload()
+        profile = payload["profiles"][0]
+        profile["metrics"]["conformance_score_pct"] = 92.0
+        profile["metrics"]["capability_coverage_pct"] = 95.0
+        profile["metrics"]["validation_pass_rate_pct"] = 96.0
+
+        readiness = evaluate_readiness_gates(payload)
+        recommendations = readiness["profiles"][0]["recommendations"]
+
+        categories = [item["category"] for item in recommendations]
+        self.assertIn("capability_coverage", categories)
+        self.assertIn("validation_reliability", categories)
+
+    def test_recommendations_sorted_by_priority_then_category(self) -> None:
+        payload = self._scorecard_payload()
+        profile = payload["profiles"][0]
+        profile["fail_triggered"] = True
+        profile["fail_reasons"] = ["removed_mappings_exceeded:1>0"]
+        profile["drift"]["removed_mappings"] = 1
+        profile["drift"]["changed_mappings"] = 1
+
+        readiness = evaluate_readiness_gates(payload)
+        recommendations = readiness["profiles"][0]["recommendations"]
+        sort_keys = [(item["priority"], item["category"]) for item in recommendations]
+
+        self.assertEqual(sorted(sort_keys), sort_keys)
+
 
 if __name__ == "__main__":
     unittest.main()
