@@ -202,6 +202,14 @@ class AdapterFramework:
             },
         }
 
+    def smoke_validation_profile(self, adapter_id: str, payload: Dict[str, Any]) -> Dict[str, Any]:
+        return {
+            "classification": "repo-backed",
+            "contract_signature": self.contract_signature(),
+            "registry": self.registry_summary(),
+            "smoke": self.smoke_validation_report(adapter_id, payload),
+        }
+
     def route(self, adapter_id: str, request: AdapterRequest) -> AdapterResponse:
         adapter = self._adapters.get(adapter_id)
         if adapter is None:

@@ -366,6 +366,31 @@ class AdapterFrameworkSkeletonTests(unittest.TestCase):
         self.assertFalse(report["lifecycle"]["ok"])
         self.assertEqual("adapter_not_found", report["lifecycle"]["error_code"])
 
+    def test_smoke_validation_profile_for_registered_adapter(self) -> None:
+        framework = AdapterFramework()
+        framework.register("reference", ReferenceAdapterStub())
+
+        profile = framework.smoke_validation_profile("reference", {"k": "v"})
+
+        self.assertEqual("repo-backed", profile["classification"])
+        self.assertEqual(
+            "transitiq.connectors.adapter_framework.contract_surface@1.0.0",
+            profile["contract_signature"]["fingerprint"],
+        )
+        self.assertIn("reference", profile["registry"]["adapter_ids"])
+        self.assertTrue(profile["smoke"]["route"]["ok"])
+        self.assertTrue(profile["smoke"]["lifecycle"]["ok"])
+
+    def test_smoke_validation_profile_for_missing_adapter(self) -> None:
+        framework = AdapterFramework()
+
+        profile = framework.smoke_validation_profile("missing", {"k": "v"})
+
+        self.assertEqual("repo-backed", profile["classification"])
+        self.assertEqual([], profile["registry"]["adapter_ids"])
+        self.assertFalse(profile["smoke"]["route"]["ok"])
+        self.assertFalse(profile["smoke"]["lifecycle"]["ok"])
+
 
 if __name__ == "__main__":
     unittest.main()
