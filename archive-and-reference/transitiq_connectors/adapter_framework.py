@@ -181,6 +181,27 @@ class AdapterFramework:
             ],
         }
 
+    def smoke_validation_report(self, adapter_id: str, payload: Dict[str, Any]) -> Dict[str, Any]:
+        route_response = self.route(adapter_id, AdapterRequest(route="echo", payload=payload))
+        lifecycle_response = self.run_lifecycle(adapter_id, payload)
+
+        return {
+            "adapter_id": adapter_id,
+            "adapter_loaded": self.has_adapter(adapter_id),
+            "route": {
+                "ok": route_response.ok,
+                "route": route_response.route,
+                "error_code": route_response.error_code,
+                "result": route_response.result,
+            },
+            "lifecycle": {
+                "ok": lifecycle_response.ok,
+                "route": lifecycle_response.route,
+                "error_code": lifecycle_response.error_code,
+                "result": lifecycle_response.result,
+            },
+        }
+
     def route(self, adapter_id: str, request: AdapterRequest) -> AdapterResponse:
         adapter = self._adapters.get(adapter_id)
         if adapter is None:
