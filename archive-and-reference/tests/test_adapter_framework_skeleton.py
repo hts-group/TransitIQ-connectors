@@ -67,6 +67,28 @@ class AdapterFrameworkSkeletonTests(unittest.TestCase):
         self.assertFalse(framework.supports_route("reference", "configure"))
         self.assertFalse(framework.supports_route("missing", "health"))
 
+    def test_framework_unregister_returns_true_for_registered_adapter(self) -> None:
+        framework = AdapterFramework()
+        framework.register("reference", ReferenceAdapterStub())
+
+        self.assertTrue(framework.unregister("reference"))
+        self.assertEqual([], framework.list_registered_adapters())
+
+    def test_framework_unregister_returns_false_for_missing_adapter(self) -> None:
+        framework = AdapterFramework()
+
+        self.assertFalse(framework.unregister("missing"))
+
+    def test_framework_route_after_unregister_returns_not_found(self) -> None:
+        framework = AdapterFramework()
+        framework.register("reference", ReferenceAdapterStub())
+        framework.unregister("reference")
+
+        response = framework.route("reference", AdapterRequest(route="health", payload={}))
+
+        self.assertFalse(response.ok)
+        self.assertEqual("adapter_not_found", response.error_code)
+
 
 if __name__ == "__main__":
     unittest.main()

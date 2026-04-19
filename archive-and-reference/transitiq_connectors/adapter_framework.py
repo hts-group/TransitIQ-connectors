@@ -41,6 +41,13 @@ class AdapterFramework:
     def register(self, adapter_id: str, adapter: AdapterInterface) -> None:
         self._adapters[adapter_id] = adapter
 
+    def unregister(self, adapter_id: str) -> bool:
+        if adapter_id not in self._adapters:
+            return False
+
+        del self._adapters[adapter_id]
+        return True
+
     def list_registered_adapters(self) -> list[str]:
         return sorted(self._adapters.keys())
 
