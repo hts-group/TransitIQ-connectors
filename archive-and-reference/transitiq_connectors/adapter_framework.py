@@ -41,6 +41,20 @@ class AdapterFramework:
     def register(self, adapter_id: str, adapter: AdapterInterface) -> None:
         self._adapters[adapter_id] = adapter
 
+    def list_registered_adapters(self) -> list[str]:
+        return sorted(self._adapters.keys())
+
+    def supports_route(self, adapter_id: str, route: str) -> bool:
+        adapter = self._adapters.get(adapter_id)
+        if adapter is None:
+            return False
+
+        supported_routes = getattr(adapter, "SUPPORTED_ROUTES", None)
+        if supported_routes is None:
+            return False
+
+        return route in supported_routes
+
     def route(self, adapter_id: str, request: AdapterRequest) -> AdapterResponse:
         adapter = self._adapters.get(adapter_id)
         if adapter is None:
