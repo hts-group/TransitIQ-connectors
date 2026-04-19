@@ -1,6 +1,6 @@
 # Execution Plan - Issue #2 Readiness/Diagnostics Coverage Gaps (Round 2)
 
-Status: Active (claimed slice delivered; awaiting PM verification)
+Status: Closed (delivered, merged, and milestone evidence posted)
 Owner: Connectors / Integrations agent
 Last updated: 2026-04-19
 
@@ -28,12 +28,18 @@ Current blockers: None.
 
 ## Next Step
 
-1. Post milestone evidence in issue #2 with required containment format.
-2. Recheck issue #2 immediately for new directives.
+1. Continue issue #2 dependency-watch cadence through due-window checkpoint.
+2. Claim next PM-opened connectors slice when available.
 
 ## Closure Evidence
 
-- Pending: milestone comment link
-- Pending: commit link
-- Pending: PR link
-- Pending: validation commands
+- Issue #2 milestone comment:
+  - https://github.com/hts-group/TransitIQ-connectors/issues/2#issuecomment-4274959096
+- Commit:
+  - https://github.com/hts-group/TransitIQ-connectors/commit/5d605336a65d14a4808085bba151ce976766b2e8
+- PR:
+  - https://github.com/hts-group/TransitIQ-connectors/pull/22
+- PR #22 merge commit on main:
+  - https://github.com/hts-group/TransitIQ-connectors/commit/3838054aafa6929f9e534ee16d4c276983c17556
+- Validation:
+  - `python -m unittest tests.test_readiness_gates tests.test_closure_dependency_diagnostics -v`
