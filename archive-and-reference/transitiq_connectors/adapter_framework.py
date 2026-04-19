@@ -103,6 +103,12 @@ class AdapterFramework:
             "supported_routes": self.list_supported_routes(adapter_id),
         }
 
+    def registered_adapter_count(self) -> int:
+        return len(self._adapters)
+
+    def is_registry_empty(self) -> bool:
+        return self.registered_adapter_count() == 0
+
     def route(self, adapter_id: str, request: AdapterRequest) -> AdapterResponse:
         adapter = self._adapters.get(adapter_id)
         if adapter is None:
