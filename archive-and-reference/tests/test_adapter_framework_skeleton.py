@@ -308,6 +308,10 @@ class AdapterFrameworkSkeletonTests(unittest.TestCase):
 
         surface = framework.contract_surface()
 
+        self.assertEqual(
+            "transitiq.connectors.adapter_framework.contract_surface",
+            surface["contract_surface_id"],
+        )
         self.assertEqual("1.0.0", surface["contract_surface_version"])
         self.assertEqual(
             ["AdapterRequest", "AdapterResponse", "AdapterLifecycleSnapshot"],
