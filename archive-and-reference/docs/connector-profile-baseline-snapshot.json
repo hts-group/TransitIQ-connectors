@@ -1,0 +1,57 @@
+{
+  "version": "2026-04-18",
+  "profiles": {
+    "ntcip": {
+      "capabilities": [
+        "brightness_control",
+        "connect",
+        "control_mode",
+        "discovery",
+        "message_post",
+        "observed_status"
+      ],
+      "class_mappings": {
+        "brightness_control": "telemetry",
+        "connect": "health",
+        "control_mode": "operator_action",
+        "discovery": "debug",
+        "message_post": "operator_action",
+        "observed_status": "health"
+      }
+    },
+    "solari": {
+      "capabilities": [
+        "connect",
+        "control_mode",
+        "discovery",
+        "observed_status",
+        "predefined_message_activation",
+        "template_activation"
+      ],
+      "class_mappings": {
+        "connect": "health",
+        "control_mode": "operator_action",
+        "discovery": "debug",
+        "observed_status": "health",
+        "predefined_message_activation": "operator_action",
+        "template_activation": "operator_action"
+      }
+    },
+    "yaham": {
+      "capabilities": [
+        "brightness_control",
+        "connect",
+        "discovery",
+        "observed_status",
+        "playlist_control"
+      ],
+      "class_mappings": {
+        "brightness_control": "telemetry",
+        "connect": "health",
+        "discovery": "debug",
+        "observed_status": "health",
+        "playlist_control": "operator_action"
+      }
+    }
+  }
+}
